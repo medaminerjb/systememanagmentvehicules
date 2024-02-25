@@ -1,0 +1,177 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'&& $_SESSION['userRole'] !== 'chauffeur'&& $_SESSION['userRole'] !== 'agent'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<style>
+    input:focus:required:invalid {border: 1px solid red;}
+    input:required:valid { border: 1px solid #d9dee3; }
+    select:focus:required:invalid {border: 1px solid red;}
+    select:required:valid { border: 1px solid #d9dee3; }
+    textarea:focus:required:invalid {border: 1px solid red;}
+    textarea:required:valid { border: 1px solid #d9dee3; }
+</style>
+<link rel="stylesheet" href="/views/assets/css/selectize.css"/>
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">kilometerage/</span> Ajouter</h4>
+
+<!-- Basic Layout -->
+<div class="row">
+  <div class="col-xl">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Ajouter kilometerage a Vehicule</h5>
+      </div>
+      <div class="card-body">
+        <span id="addkilometergeerr"></span>
+        <form autocomplete="off" id="addkilometergeForm">
+        <div class="mb-3">
+            <label class="form-label" for="select_box">Vehicule</label>
+                <select class="form-control" id="select_box2" aria-label="Default select example" required>
+                   <div id="vehicle"> <option selected value="" id="">Vehicule </option></div>
+                </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="select_box2">excursion</label>
+                <select class="form-control"  id="select_box" aria-label="Default select example" required>
+                    <option selected value=""> excursion </option>
+                </select>
+          </div>
+          <?php if($_SESSION['userRole'] === 'superAdmin' ||$_SESSION['userRole'] === 'Admin'||$_SESSION['userRole'] === 'Agent' ): ?>
+          <div class="mb-3">
+            <label class="form-label" for="select_box3">Chauffeur</label>
+                <select class="form-control" id="select_box3" aria-label="Default select example" required>
+                    <option selected value="" id="">Chauffeur </option>
+                </select>
+          </div>
+          <?php endif ?>
+          <?php if($_SESSION['userRole'] === 'chauffeur' ): ?>
+          <div class="mb-3" id="select_box3" value="0">
+          </div>
+          <?php endif ?>
+
+<script>
+  
+  function validatekm() {
+
+
+    document.getElementById("depart").addEventListener('change', async() => {
+        try {
+            const kmRequest = await fetch('/api/kilometerges?method=kmhis');
+            const kmResponse = await kmRequest.json();
+            kmResponse.data.forEach(km=>{
+                if(document.getElementById("select_box").value===km.vehicleUuid){
+                  document.getElementById("depart").value=km.arrive;
+                }
+
+            })
+        } catch (error) {
+            // Handle errors
+            console.error('Error fetching data:', error);
+        }
+    });
+
+
+    var depart = parseInt(document.getElementById("depart").value);
+    var arrive = parseInt(document.getElementById("arrive").value);
+
+    if (arrive <= depart) {
+      document.getElementById("arrive").setCustomValidity(" 'le kilométrage à l'arrivée devrait être supérieur à celui du départ'");
+    } else {
+      document.getElementById("arrive").setCustomValidity("");
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("arrive").addEventListener('invalid', function() {
+      this.setCustomValidity("le kilométrage à l'arrivée devrait être supérieur à celui du départ");
+    });
+  });
+</script>
+
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">kilometerage de depart</label>
+            <input name="depart" id="depart" type="number" class="form-control" max="document.getElementById('arrive').value" oninvalid="this.setCustomValidity(`kilometerge non!`)" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+        
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">kilometerage de arrive</label>
+            <input name="arrive" id="arrive" type="number" class="form-control" onchange="validatekm()"  oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  
+
+
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+    <script src="/views/api/kilometerges.API.js"></script>
+  <script src="/views/dselect.js"></script>
+
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/form-layouts-vertical.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:29 GMT -->
+</html>

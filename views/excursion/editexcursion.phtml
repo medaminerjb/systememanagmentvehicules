@@ -1,0 +1,121 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Excursions /</span> Excursion Details
+</h4>
+<form autocomplete="off" id="editexcursion">
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> Excursion Mis à jour avec succès !</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="model" class="form-label">Nom de Excursion</label>
+          <input type="text" name="nom" id="model" value="<?php echo $excursion['data']['nom'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col mb-3">
+          <label for="color" class="form-label"> Destination de Excursion</label>
+          <input type="text" name="destination" id="color" value="<?php echo $excursion['data']['destination'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+      <div class="col mb-3" id="selectParent">
+    <label for="ligne" class="form-label">Ligne de mission</label>
+    <select id="ligne" name="ligne" class="form-select" required>
+        <option value="<?php echo $excursion['data']['ligne'];?>"><?php echo $excursion['data']['ligne'];?></option>
+        <option value="direct">Ligne directe par exemple (de zone 1 vers zone 9)</option>
+        <option value="inverse">Ligne inverse par exemple (de zone 9 vers zone 1)</option>
+    </select>
+</div>
+
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier Excursion</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api/excursion.API.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

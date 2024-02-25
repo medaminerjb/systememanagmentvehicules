@@ -1,0 +1,135 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Chauffeurs /</span> Chauffeur Details
+</h4>
+
+<div class="row">
+  <div class="col-md-12">
+  
+    <div class="card mb-4">
+      <h5 class="card-header">Profile Details</h5>
+          <p style="margin-left: 30px" class="p-2" id="pError"></p>
+      <!-- Account -->
+      <form autocomplete="off" id="updateDriver" class="p-3">
+          <div class="card-body">
+          <div class="row">
+            <div class="col mb-3" id="inputParent">
+              <label for="nameBasic" class="form-label">Nom</label>
+              <input type="text" id="nameBasic" value="<?php echo $driver['data']['driverFullName'] ?>"  name="driverName" class="form-control" placeholder="Enter Name" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mb-3" id="inputParent">
+              <label for="dob" class="form-label">Date de naissance</label>
+              <input type="date" name="dob" value="<?php echo $driver['data']['bateOfBirth'] ?>" id="dob" class="form-control" placeholder="Driver's Date of Birth" required>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col mb-0" id="inputParent">
+              <label for="phone-h" class="form-label">Numero de Portable</label>
+              <input type="number" value="<?php echo $driver['data']['phoneHome'] ?>" name="phoneOne" id="phone-h" class="form-control" placeholder="xxxxxxxxxx" required>
+            </div>
+            <div class="col mb-0" id="inputParent">
+              <label for="phone-m" class="form-label">Numero de Telehone </label>
+              <input type="number" value="<?php echo $driver['data']['phoneMobile'] ?>" name="phoneTwo" id="phone-m" class="form-control" placeholder="xxxxxxxxxx" required>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col mb-0" id="inputParent">
+              <label for="id-number" class="form-label">Cin</label>
+              <input type="text" value="<?php echo $driver['data']['idNumber'] ?>" name="idNumber" id="id-number" class="form-control" placeholder="xxxxxxxxxx" required>
+            </div>
+            <div class="col mb-0" id="inputParent">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" value="<?php echo $driver['data']['email'] ?>" name="driverEmail" id="email" class="form-control" placeholder="xxx@xxxx.xxx" required>
+            </div>
+          </div>
+
+         
+          
+          <div class="modal-footer">
+            <button type="submit" id="updateDriverBtn" class="btn btn-primary">Sauvgarder changament</button>
+          </div>
+        </div>
+        </form>
+      <!-- /Account -->
+    </div>
+  </div>
+</div>
+
+
+            
+          </div>
+          <!-- / Content -->
+  <script src="/views/api/drivers.API.js"></script>
+
+
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  <!-- Place this tag in your head or just before your close body tag. -->
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

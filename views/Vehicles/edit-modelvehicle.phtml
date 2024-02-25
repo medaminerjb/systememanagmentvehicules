@@ -1,0 +1,183 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Vehicules /</span> Vehicle Details
+</h4>
+<form autocomplete="off" id="editmodel">
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const typeSelect = document.getElementById('typev');
+      
+     // select chauffeur
+     const driversRequest = await fetch('/api/typevehicle?method=GET&&methode=type');
+            const driverResponse = await driversRequest.json();
+            // select chauffeur
+            driverResponse.data.forEach(type => {
+              typeSelect.insertAdjacentHTML('beforeend', `<option value="${type.vtypeUuid}">${type.vtype} ${type.placemi}${type.placemx} places</option>`); });
+       
+      // Initialize selectize
+
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching or processing data:', error);
+    }
+    
+});
+
+</script>
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> Vehicule Mis à jour avec succès!</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+      <div class="row">
+            <div class="col mb-3">
+              <label for="model" class="form-label">Model</label>
+              <input name="model" type="text" id="model" class="form-control" value="<?php echo $model['data']['model']; ?>" placeholder="" required>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col mb-3" id="selectParent">
+                <label for="defaultSelectRole" class="form-label">Type de vehicle</label>
+                <select id="typev" name="typev" class="form-select" required>
+                  <option value="<?php echo $model['data']['vtypeUuid']; ?>"><?php echo $model['data']['vtype']; ?></option>
+                 
+                 </select>
+                 </div>
+                 </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="place" class="form-label">Nombre de place </label>
+              <input name="place" type="number" id="place" class="form-control" value="<?php echo $model['data']['place']; ?>" placeholder="" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="puissanceM" class="form-label">Puissance de moteur</label>
+              <input name="puissanceM" type="number" id="puissanceM" value="<?php echo $model['data']['puissanceM']; ?>" class="form-control" placeholder="" required>  
+          </div>
+            </div>
+            <div class="row">
+            <div class="col mb-3">
+              <label for="puissanceA" class="form-label">Puissance de Administrative</label>
+              <input name="puissanceA" type="number" id="puissanceA" value="<?php echo $model['data']['puissanceA']; ?>"class="form-control" placeholder="" required>  
+          </div>
+            </div>
+            <div class="row">
+            <div class="col mb-3">
+              <label for="bvitesse" class="form-label">Boite de voitesse</label>
+              <input name="bvitesse" type="number" id="bvitesse" value="<?php echo $model['data']['bvitesse']; ?>"class="form-control" placeholder="" required>  
+          </div>
+            </div>
+            <div class="row">
+            <div class="col mb-3">
+              <label for="reservoir" class="form-label">Réservoir</label>
+              <input name="reservoir" type="number" id="reservoir" value="<?php echo $model['data']['reservoir']; ?>" class="form-control" placeholder="" required>  
+          </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3" id="selectParent">
+                <label for="typec" class="form-label">Type de carburant</label>
+                <select id="typec" name="typec" class="form-select" required>
+                <option value="<?php echo $model['data']['typec']; ?>" selected><?php echo $model['data']['typec']; ?></option>
+                     <option value="Essance">Essance</option>
+                     <option value="Mazout">Mazout</option>
+                     <option value="Electrique">Electrique</option>
+                     <option value="Hybrid">Hybrid</option>
+                </select>
+              </div>
+            </div>
+                
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier Vehicule</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api/modulevehicle.API.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

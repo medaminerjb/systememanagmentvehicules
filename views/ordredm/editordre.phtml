@@ -1,0 +1,182 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+          <div class="container-xxl flex-grow-1 container-p-y">     
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Ordres /</span> Ordres Details
+</h4>
+<form autocomplete="off" id="editordre">
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> Ordre Mis à jour avec succés!</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+
+      <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const excursionSelect = document.getElementById('select_box');
+      const vehicleSelect = document.getElementById('select_box2');
+      const driverSelect = document.getElementById('select_box3');
+
+      // Fetch vehicles data
+      const vehiclesRequest = await fetch('/api/vehicles?methode=allVehicles');
+      const vehiclesResponse = await vehiclesRequest.json();
+
+      // Process vehicles data
+      vehiclesResponse.data.forEach(vehicle => {
+        vehicleSelect.insertAdjacentHTML('beforeend', `<option value="${vehicle.vehicleUuid}">${vehicle.regisNumber}</option>`);
+      });
+
+      // Fetch excursions data
+      const excursionRequest = await fetch('/api/excursion?methode=allexcursions');
+      const excursionResponse = await excursionRequest.json();
+
+      // Process excursions data
+      excursionResponse.data.forEach(excursion => {
+        excursionSelect.insertAdjacentHTML('beforeend', `<option value="${excursion.excursionUuid}">${excursion.nom}</option>`);
+      });
+      const driverRequest = await fetch('/api/drivers?method=GET');
+            const driverResponse = await driverRequest.json();
+            // select chauffeur
+                driverResponse.data.forEach(driver => {
+                driverSelect.insertAdjacentHTML('beforeend', `<option value="${driver.driverUuid}">${driver.driverFullName}</option>`); });
+         
+      // Initialize selectize
+      $('select').selectize({ sortField: 'text' });
+
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching or processing data:', error);
+    }
+    
+});
+
+</script>
+
+
+      <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box2">excursion</label>
+                <select class="form-control" id="select_box" aria-label="Default select example" required>
+                    <option selected value="<?php echo $ordre['data']['excursionUuid'];?>"><?php echo $ordre['data']['nom'];?> </option>
+                </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" for="select_box">Vehicle</label>
+                <select class="form-control" id="select_box2" aria-label="Default select example" required>
+                    <option selected value="<?php echo $ordre['data']['vehicleUuid'];?>" id=""><?php echo $ordre['data']['regisNumber'];?> </option>
+                </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="select_box">chauffeur</label>
+                <select class="form-control" id="select_box3" aria-label="Default select example" required>
+                    <option selected value="<?php echo $ordre['data']['driverUuid'];?>" id=""><?php echo $ordre['data']['driverFullName'];?></option>
+                </select>
+               </div>
+          <div class="row">
+            <div class="col mb-3"> 
+              <label for="color" class="form-label">date excursion</label>
+              <input type="date" id="excursion"value="<?php echo $ordre['data']['excursion'];?>" name="excursion"class="form-control" placeholder="" required min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>">
+            </div>
+          </div> 
+          <div class="col mb-3">
+          <label for="model" class="form-label">heure</label>
+          <input type="text" name="heure" id="model" value="<?php echo $ordre['data']['heure'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col mb-3">
+          <label for="color" class="form-label">Excursion Destination</label>
+          <input type="text" name="excursion" id="color" value="<?php echo $ordre['data']['nom'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+      <div class="row">
+            <div class="col mb-3">
+              <label for="color" class="form-label">Agence</label>
+              <input type="text" id="agence" name="agence"value="<?php echo $ordre['data']['agence'];?>" class="form-control" placeholder="" required>
+            </div>
+          </div>
+         
+          
+        
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier Ordre</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api//ordm.API.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

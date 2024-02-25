@@ -1,0 +1,378 @@
+<?php
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'&& $_SESSION['userRole'] !== 'chauffeur'&& $_SESSION['userRole'] !== 'Agent'):
+    include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+    return;
+  endif;
+
+
+
+require $_SERVER['DOCUMENT_ROOT'].'/views/ordredm/fpdf186/fpdf.php'; 
+class PDF extends FPDF
+{
+   
+}
+
+
+
+
+// Création d'une instance de la classe PDF
+$pdf = new PDF();
+$pdf->AddPage();
+
+// En-tête du tableau
+
+
+//logo 
+$logo = $_SERVER['DOCUMENT_ROOT']."/uploads/logos/" . (isset(Settings::$getLogo) ? Settings::$getLogo : '');
+$fileExtension = pathinfo($logo, PATHINFO_EXTENSION);
+$sign = __DIR__.'/fonts/sig.png';
+$img = __DIR__.'/fonts/footer2.png';
+$img2 = __DIR__.'/fonts/body5.png';
+$img3 = __DIR__.'/fonts/body6.png';
+$table = __DIR__.'/fonts/mlk.png';
+$tableheader = __DIR__.'/fonts/header.png';
+$tablebody = __DIR__.'/fonts/body.png';
+$logbody = __DIR__.'/fonts/logbody.png';
+   
+$pdf->Image($logo,20,2,60,45 ,$fileExtension);
+$pdf->setFont('Times','',8);
+
+$pdf->SetXY(140, 0);
+$pdf->Cell(0,50,'+216 '.(isset(Settings::$getSiteNumber1) ? Settings::$getSiteNumber2 :'').'',0,1,'R');
+$pdf->SetXY(140, 5);
+$pdf->Cell(0,50,'+216 '.(isset(Settings::$getSiteNumber1) ? Settings::$getSiteNumber1 :'').'',0,1,'R');
+$pdf->Image($img,10, 225, 0, 0, 'PNG');
+
+
+$pdf->Image($img3,17.5, 50, 0, 180, 'PNG');
+// Données du tableau
+ // Example: 50% opacity
+
+ 
+$pdf->SetFont('Times', 'B', 16);
+
+// Output first title
+$pdf->SetXY(20, 10);
+$pdf->Cell(0, 90, 'Ordre de mission '.$ordre['data']['type'], 0, 1, 'C');
+$pdf->SetFont('Times', '', 12);
+$pdf->SetXY(20, 50);
+// Table headers
+if( ($ordre['data']['type']==='excursion')||($ordre['data']['type']==='transferet'))
+{// Add the image to the PDF document
+$pdf->SetXY(20, 60);
+// Table data
+$pdf->Cell(22, 5, 'Excursion :', 0, 0, '');
+$pdf->Cell(22, 5,$ordre['data']['nom'], 0, 1, '');
+$pdf->SetXY(20, 68);
+$pdf->Cell(22, 5, 'Depart :', 0, 0, '');
+$pdf->Cell(22, 5,$ordre['data']['excursion'].' '.$ordre['data']['heure'], 0, 1, '');
+$pdf->SetXY(20, 76);
+$pdf->Cell(22, 5, 'Retour :', 0, 0, '');
+$pdf->Cell(22, 5,$ordre['data']['dater'].' '.$ordre['data']['heurer'], 0, 1, '');
+/*$pdf->SetXY(20, 76);
+$pdf->Cell(22, 5, 'Vehicule :', 0, 0, '');
+$pdf->Cell(22, 5,$ordre['data']['regisNumber'], 0, 1, '');*/
+$pdf->SetXY(20, 84);
+$pdf->Cell(22, 5, 'Vehicule :', 0, 0, '');
+$pdf->Cell(22, 5,$ordre['data']['regisNumber'], 0, 1, '');
+$pdf->SetXY(20, 92);
+$pdf->Cell(22, 5, 'Chauffeur :', 0, 0, '');
+$pdf->Cell(22, 5, $ordre['data']['driverFullName'].' -Tel : '.$ordre['data']['phoneMobile'],0, 1, '');
+$pdf->SetXY(20, 100);
+$pdf->Cell(22, 5, 'Guide', 0, 0, '');
+$pdf->Cell(22, 5,  $ordre['data']['phoneMobile'], 0, 1, '');
+
+$pdf->SetFont('Times', '', 10);
+/*
+$pdf->SetXY(20, 114);
+$pdf->Cell(22, 5, 'heure', 0, 0, '');
+
+$pdf->SetXY(20, 121);
+$pdf->Cell(22, 5, $ordre['data']['heure'], 0, 1, '');
+$pdf->SetXY(48, 114);
+$pdf->Cell(22, 5, 'hotel', 0, 0, '');
+$pdf->SetFont('Times', '', 6.5);
+$pdf->SetXY(33.5, 121);
+$pdf->Cell(22, 5, $ordre['data']['hotel'], 0, 0, '');
+$pdf->SetFont('Times', '', 10);
+$pdf->SetXY(76, 114);
+$pdf->Cell(22, 5, 'Agence', 0, 0, '');
+$pdf->SetTextColor(255,0,0);
+$pdf->SetFont('Times', '', 6.5);
+$pdf->SetXY(68, 121);
+$pdf->Cell(22, 5, $ordre['data']['agence'], 0, 1, '');
+$pdf->SetTextColor(0,0,0);
+$pdf->SetFont('Times', '', 10);
+$pdf->SetXY(103, 114);
+$pdf->Cell(22, 5, 'Chambre', 0, 0, '');
+$pdf->SetXY(103, 121);
+$pdf->Cell(22, 5,$ordre['data']['chambre'], 0, 0, '');
+$pdf->SetXY(122, 114);
+$pdf->Cell(22, 5, 'adulte', 0, 0, '');
+$pdf->SetTextColor(255,0,0);
+$pdf->SetXY(122, 121);
+$pdf->Cell(22, 5, $ordre['data']['adulte'], 0, 1, '');
+$pdf->SetTextColor(0,0,0);
+$pdf->SetXY(139, 114);
+$pdf->Cell(22, 5, 'enfant', 0, 0, '');
+$pdf->SetTextColor(255,0,0);
+$pdf->SetXY(139, 121);
+$pdf->Cell(22, 5, $ordre['data']['enfant'], 0, 1, '');
+$pdf->SetTextColor(0,0,0);
+$pdf->SetXY(157, 114);
+$pdf->Cell(22, 5, 'bebe', 0, 0, '');
+$pdf->SetTextColor(255,0,0);
+$pdf->SetXY(157, 121);
+$pdf->Cell(22, 5, $ordre['data']['bebe'], 0, 1, '');
+$pdf->SetXY(142, 128);
+$pdf->Cell(22, 5, $ordre['data']['adulte']+$ordre['data']['bebe']+$ordre['data']['bebe'], 0, 1, '');
+$pdf->SetTextColor(0,0,0);
+$pdf->SetXY(169, 114);
+$pdf->Cell(22, 5, 'Observation', 0, 0, '');
+$pdf->SetXY(20, 135);
+$pdf->Cell(22, 5, 'Observation : ', 0, 0, '');
+
+*/
+$x =0;
+$y =0;
+$t = 0; 
+$total = 0;// Initialize $p before the loop
+$totalenf = 0;
+$totalbb =0;
+$totaladul = 0;
+$pdf->Image($tableheader,17, 110+$t, 178.5, 15, 'PNG');
+
+$pdf->SetXY(180, 113);
+foreach ($tickets as $ticket) {
+    $pdf->SetXY(17.5, 110+$t);
+ $pdf->Image($tablebody,17.42, 118+$t, 177.657, 5, 'PNG');
+$t+=4;
+}
+$pdf->Image($tablebody,17.42, 118+$t, 177.657, 5, 'PNG');
+$currentarray = $tickets;
+$pdf->SetXY(18.5, 113);
+$pdf->Cell(22, 5, 'heure', 0, 0, '');
+$pdf->SetXY(48, 113);
+$pdf->Cell(22, 5, 'hotel', 0, 0, '');
+$pdf->SetXY(87, 113);
+$pdf->Cell(22, 5, 'client', 0, 0, '');
+$pdf->SetXY(111, 113);
+$pdf->Cell(22, 5, 'chambr', 0, 0, '');
+$pdf->SetFont('Times', '', 6.5);
+$pdf->SetXY(126, 111);
+$pdf->Cell(22, 5, 'pax Prevus', 0, 0, '');
+$pdf->SetXY(125, 114.75);
+$pdf->Cell(22, 5, 'adl', 0, 0, '');
+$pdf->SetXY(130, 114.75);
+$pdf->Cell(22, 5, 'enf', 0, 0, '');
+$pdf->SetXY(135, 114.75);
+$pdf->Cell(22, 5, 'inf', 0, 0, '');
+$pdf->SetXY(145, 111);
+$pdf->Cell(22, 5, 'pax Reels', 0, 0, '');
+$pdf->SetXY(142, 114.75);
+$pdf->Cell(22, 5, 'adl', 0, 0, '');
+$pdf->SetXY(148, 114.75);
+$pdf->Cell(22, 5, 'enf', 0, 0, '');
+$pdf->SetXY(155, 114.75);
+$pdf->Cell(22, 5, 'inf', 0, 0, '');
+$pdf->SetXY(163, 113);
+$pdf->Cell(22, 5, 'Ticket', 0, 0, '');
+$pdf->SetXY(179, 113);
+$pdf->Cell(22, 5, 'obeservation', 0, 0, '');
+$pdf->SetFont('Times', '',10);
+
+if($ordre['data']['ligne']==='direct')
+
+{for ($i = 0; $i < count($currentarray) - 1; $i++) {
+    $minIndex = $i;
+    for ($j = $i + 1; $j < count($currentarray); $j++) {
+            if($currentarray[$j]['zone'] >$currentarray[$minIndex]['zone']){
+                $minIndex=$minIndex;
+            }
+            if($currentarray[$j]['zone'] === $currentarray[$minIndex]['zone']){
+                if ($currentarray[$j]['numero'] < $currentarray[$minIndex]['numero']) {
+                    $minIndex = $j; 
+                }
+            }
+      
+    }
+    if ($minIndex !== $i) {
+        $tmp = $currentarray[$i];
+        $currentarray[$i] = $currentarray[$minIndex];
+        $currentarray[$minIndex] = $tmp;
+    }
+}}
+else{for ($i = 0; $i < count($currentarray) - 1; $i++) {
+    $maxIndex = $i;
+    for ($j = $i + 1; $j < count($currentarray); $j++) {
+        if ($currentarray[$j]['zone'] > $currentarray[$maxIndex]['zone']) {
+            $maxIndex = $j; 
+        } elseif ($currentarray[$j]['zone'] === $currentarray[$maxIndex]['zone']) {
+            
+            if ($currentarray[$j]['numero'] > $currentarray[$maxIndex]['numero']) {
+                $maxIndex = $j; 
+            }
+        }
+    }
+    if ($maxIndex !== $i) {
+        
+        $tmp = $currentarray[$i];
+        $currentarray[$i] = $currentarray[$maxIndex];
+        $currentarray[$maxIndex] = $tmp;
+    }
+}
+
+}
+
+
+// Print the sorted array
+
+foreach ($currentarray as $ticket) {  
+    $pdf->SetFont('Times', '', 9);  
+    $pdf->SetXY(18.5, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['depart'], 0, 1, '');
+   
+    $pdf->SetFont('Times', '', 6.5);
+    $pdf->SetXY(30, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['hotel'], 0, 0, '');
+   
+    $pdf->SetFont('Times', '', 8);
+   
+    $pdf->SetXY(70, 117.57+$y);
+    $pdf->Cell(22, 5,$ticket['client'], 0, 0, '');
+    $pdf->SetFont('Times', '', 8);
+    if( ($ordre['data']['type']==='excursion')){
+        $pdf->SetXY(111, 117.57+$y);
+        $pdf->Cell(22, 5,$ticket['chambre'], 0, 0, '');
+
+    }
+    
+  
+    $pdf->SetFont('Times', '', 8);
+    $pdf->SetXY(125, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['adulte'], 0, 1, '');
+   
+    
+    $pdf->SetXY(130, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['enfant'], 0, 1, '');
+
+    $pdf->SetXY(135, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['bebe'], 0, 1, '');
+    $pdf->SetXY(142,  117.57+$y);
+    $pdf->Cell(22, 5, $ticket['adulter'], 0, 1, '');
+   
+    $pdf->SetXY(148, 117.57+$y);
+    $pdf->Cell(22, 5, $ticket['enfantr'], 0, 1, '');
+
+    $pdf->SetXY(155,  117.57+$y);
+        $pdf->Cell(22, 5, $ticket['beber'], 0, 1, '');
+    $pdf->SetXY(160, 117.75+$y);
+    $pdf->Cell(22, 5, $ticket['numeroticket'], 0, 1, '');
+    $pdf->SetXY(178.5, 117.75+$y);
+    $pdf->Cell(22, 5, $ticket['observation'], 0, 1, '');
+    
+    $totaladul += $ticket['adulter'] ;
+    $totalenf += $ticket['enfantr']; // Accumulate the total
+    $totalbb += $ticket['beber']; // Accumulate the total
+
+    $total += $ticket['adulter']+$ticket['enfantr']+$ticket['beber'];
+    $t += 4;
+    $y += 4;
+    $x += 4;
+    
+    
+    // Increment $p for the next iteration
+}
+$pdf->SetTextColor(255,0,0);
+$pdf->SetXY(111, 117.57+$y);
+$pdf->Cell(22, 5, 'Total ', 0, 0, '');
+$pdf->SetXY(142, 117.57+$y);
+$pdf->Cell(22, 5,$totaladul, 0, 1, '');
+$pdf->SetXY(148, 117.57+$y);
+$pdf->Cell(22, 5,$totalenf, 0, 1, '');
+$pdf->SetXY(155, 117.57+$y);
+$pdf->Cell(22, 5,$totalbb, 0, 1, '');
+$pdf->SetXY(160, 117.57+$y);
+$pdf->Cell(22, 5,$total, 0, 1, '');
+$pdf->SetTextColor(0,0,0);
+}
+
+else
+
+{
+    
+    // Données du tableau    
+    $pdf->SetXY(20, 60);
+    // Table data
+    $pdf->Cell(22, 5, 'Mission :', 0, 0, '');
+    $pdf->Cell(22, 5,$ordre['data']['nom'], 0, 1, '');
+    $pdf->SetXY(20, 68);
+    $pdf->Cell(22, 5, 'Date :', 0, 0, '');
+    $pdf->Cell(22, 5,$ordre['data']['excursion'], 0, 1, '');
+    $pdf->SetXY(20, 76);
+    $pdf->Cell(22, 5, 'Vehicule :', 0, 0, '');
+    $pdf->Cell(22, 5,$ordre['data']['regisNumber'], 0, 1, '');
+    $pdf->SetXY(20, 84);
+    $pdf->Cell(22, 5, 'Chauffeur :', 0, 0, '');
+    $pdf->Cell(22, 5, $ordre['data']['driverFullName'],0, 1, '');
+    $pdf->SetXY(20, 92);
+  
+    //$pdf->Cell(22, 5, 'Excursion', 0, 1, '');
+ 
+    $pdf->Cell(22, 5, 'Tel', 0, 0, '');
+    $pdf->Cell(22, 5,  $ordre['data']['phoneMobile'], 0, 1, '');
+    $pdf->SetXY(20, 100);
+    $pdf->Cell(22, 5, 'heure', 0, 0, '');
+ 
+    $pdf->Cell(22, 5, $ordre['data']['heure'], 0, 1, '');
+    $pdf->SetFont('Arial', '', 10);
+   
+    $pdf->SetFont('Times', '', 10);
+    
+}
+
+
+
+$pdf->SetFont('Arial', '', 10);
+$pdf->SetXY(20, 214);
+$pdf->Cell(22, 5, 'KM departure : '.$ordre['data']['kmdepart'] , 0, 0, '');
+$pdf->SetXY(20, 218);
+$pdf->Cell(22, 5, 'KM arrive : ', 0, 0, '');
+$pdf->SetXY(20, 222);
+$pdf->Cell(22, 5, 'KM Total : ', 0, 0, '');
+$pdf->SetXY(82, 216);
+$pdf->Cell(22, 5, 'Bon de Gasoil  : ', 0, 0, '');
+$pdf->SetXY(122, 216);
+$pdf->Cell(22, 5, 'SIGNATURE  : ', 0, 0, '');
+$pdf->SetXY(122, 220);
+$pdf->Cell(22, 5, 'SERVICE TRANSPORT  : ', 0, 0, '');
+
+
+$pdf->SetXY(17, 218);
+$pdf->Cell(0,50,''.(isset(Settings::$getSiteAdresse) ? Settings::$getSiteAdresse :'').'',0,0,'');
+$pdf->SetXY(132, 226);
+$pdf->Cell(0,50,''.(isset(Settings::$getSiteEmail) ? Settings::$getSiteEmail :'').'',0,1,'');
+$pdf->SetXY(170, 60);
+ $pdf->Cell(22,5,'date de creation : '.$ordre['data']['dateAdded'],0,1,'R');
+ $pdf->SetXY(170, 65);
+ $pdf->Cell(22,5,'numero de ordre : '.$ordre['data']['id'],0,1,'R');
+ $pdf->SetXY(170, 70);
+ $pdf->Cell(22,5,'etat de ordre : '.$ordre['data']['etat'],0,1,'R');
+
+
+/*
+$data = array(
+    array('Lionel Messi
+ ', 'Argentine', 'Paris Saint-Germain'),
+    array('Cristiano Ronaldo', 'Portugal', 'Manchester United'),
+    array('Neymar Jr.', 'Brésil', 'Paris Saint-Germain'),
+    // ... Ajoutez autant de lignes que nécessaire
+);*/
+
+// Affichage du tableau
+$pdf->SetFont('Times', '', 12);
+//$pdf->BasicTable($header, $data);
+
+// Génération du PDF
+$pdf->Output();
+?>

@@ -1,0 +1,152 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Kilometerge /</span>  Modifier
+</h4>
+<form autocomplete="off" id="editkilometerge">
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> Excursion Mis à jour avec succès!</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+
+
+
+
+      <script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const departInput = document.getElementById("depart");
+    const arriveInput = document.getElementById("arrive");
+
+    arriveInput.addEventListener('input', function() {
+        const departValue = parseFloat(departInput.value);
+        const arriveValue = parseFloat(arriveInput.value);
+
+        if (arriveValue <= departValue) {
+            this.setCustomValidity("Le kilométrage à l'arrivée devrait être supérieur à celui du départ");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+});
+</script>
+
+      <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box2">Excursion</label>
+                <select class="form-control"  id="select_box" aria-label="Default select example" required>
+                <option value="<?php echo $kilometerge['data']['excursionUuid'];?>" selected><?php echo $kilometerge['data']['nom'];?></option>
+               
+                </select>
+          </div>
+      </div>
+
+      <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box">VehicUle</label>
+                <select class="form-control" id="select_box2" aria-label="Default select example" required>
+                    <option selected value="<?php echo $kilometerge['data']['vehicleUuid'];?>" id=""><?php echo $kilometerge['data']['regisNumber'];?> </option>
+                </select>
+          </div>
+      </div>
+      
+      <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">kilometerage DE depart</label>
+            <input name="depart" id="depart" value="<?php echo $kilometerge['data']['depart'];?>" type="number" class="form-control" max="document.getElementById('arrive').value" oninvalid="this.setCustomValidity(`kilometerge non!`)" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+      </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">kilometerage de arrive</label>
+            <input name="arrive" id="arrive" value="<?php echo $kilometerge['data']['arrive'];?>" type="number" class="form-control" onchange="validatekm()"  oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+          </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier Kilometerge</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api/kilometerges.API.js"></script>
+  
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

@@ -1,0 +1,224 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin' && $_SESSION['userRole']!== 'chauffeur'&& $_SESSION['userRole'] !== 'Agent'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<style>
+    input:focus:required:invalid {border: 1px solid red;}
+    input:required:valid { border: 1px solid #d9dee3; }
+    select:focus:required:invalid {border: 1px solid red;}
+    select:required:valid { border: 1px solid #d9dee3; }
+    textarea:focus:required:invalid {border: 1px solid red;}
+    textarea:required:valid { border: 1px solid #d9dee3; }
+</style>
+<link rel="stylesheet" href="/views/assets/css/selectize.css"/>
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+
+
+<!-- Basic Layout -->
+<div class="row">
+  <div class="col-xl">
+    <div class="card mb-4">
+   
+      <div class="card-body">
+      <ul class="nav nav-pills flex-column flex-md-row mb-3">
+    
+    <li class="nav-item"><a class="nav-link " href="/ordres"> Toutes les ordres</a></li>
+    <li class="nav-item"><a class="nav-link  " href="/mission"> Nouvelle Mission</a></li>
+    <li class="nav-item"><a class="nav-link " href="/ordre">Nouvelle Excursion/Transferet</a></li>
+
+  </ul>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ordres/</span> Ajouter Odre Excursion/Transferet</h4>
+    
+        <span id="addordreErr"></span>
+        <form autocomplete="off" id="addticketForm">
+        <script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const bebeInput = document.getElementById("bebe");
+    const enfantInput = document.getElementById("enfant");
+    const adulteInput = document.getElementById("adulte");
+
+    const libreInput = document.getElementById("libre");
+
+    bebeInput.addEventListener('input', function() {
+      const bebe = parseFloat(bebeInput.value);
+        const enfant = parseFloat(enfantInput.value);
+        const adulte = parseFloat(adulteInput.value);
+        const libre = parseFloat(libreInput.value);
+
+        if (libre < (bebe+enfant+adulte)) {
+            this.setCustomValidity("Attention vous passe nombre de place vehicule");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+});
+</script>
+        
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="hotel">hotel</label>
+                <select class="form-control" id="hotel" aria-label="Default select example" required>
+                    <option selected value="" id="">hotel </option>
+                </select>
+          </div>
+          </div>
+       
+          <div class="row">
+            <div class="col mb-3">
+            <?php if($ordre['data']['type']==='excursion'): ?> 
+              <label for="color" class="form-label">Chambre</label>
+              <input type="text" id="chambre" name="chambre" class="form-control" placeholder="" required>
+            <?php endif?>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="color" class="form-label">Client</label>
+              <input type="text" id="client" name="client" class="form-control" placeholder="" required>
+            </div>
+          </div>
+       
+
+<?php $place =0;
+
+if($ordre['data']['placeocu']===0){
+  $place = $ordre['data']['place'];
+}
+else{
+  $place =$ordre['data']['place']-$ordre['data']['placeocu'];
+}
+?>
+
+
+
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="occupe">nombre de place total pour cette excursion/transfere</label>
+                <select class="form-control" id="occupe" aria-label="Default select example" required>
+                    <option selected value="<?php echo $ordre['data']['place']?>" id=""><?php echo $ordre['data']['place'] ?> </option>
+                </select>
+          </div>
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="libre">nombre total libre</label>
+                <select class="form-control" id="libre" aria-label="Default select example" required>
+                    <option selected value="<?php echo $place?>" id=""><?php echo $place ?> </option>
+                </select>
+          </div>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col mb-0" id="inputParent">
+              <label for="phone-h" class="form-label">Nbr adulte</label>
+              <input type="number" id="adulte" name="adulte" class="form-control" value="0" placeholder="xxxxxxxxxx" required>
+            </div>
+            <div class="col mb-0" id="inputParent">
+              <label for="phone-m" class="form-label">Nbr Enfant</label>
+              <input type="number"  id="enfant" name="enfant" class="form-control" value="0" placeholder="xxxxxxxxxx" required>
+            </div>
+            <div class="col mb-0" id="inputParent">
+              <label for="phone-m" class="form-label">Nbr Bebe</label>
+              <input type="number"  id="bebe" name="bebe" class="form-control" value="0" placeholder="xxxxxxxxxx" required>
+            </div>
+          </div>
+        
+    
+          
+          <div class="row">
+            <div class="col mb-3">
+              <label for="color" class="form-label">Obeservation</label>
+              <input type="text" id="obeservation" name="obeservation" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="paiment">paiment</label>
+                <select class="form-control" id="paiment" aria-label="Default select example" required>
+                <option value="">select</option>
+                  <option value="payer">payer</option>
+                  <option value="non">non payer</option>
+                                </select>
+          </div>
+          
+        
+ 
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  
+
+
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+    <script src="/views/api/ticket.API.js"></script>
+  <script src="/views/dselect.js"></script>
+
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/form-layouts-vertical.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:29 GMT -->
+</html>

@@ -1,0 +1,236 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'&& $_SESSION['userRole'] !== 'chauffeur'&& $_SESSION['userRole'] !== 'Agent'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<style>
+    input:focus:required:invalid {border: 1px solid red;}
+    input:required:valid { border: 1px solid #d9dee3; }
+    select:focus:required:invalid {border: 1px solid red;}
+    select:required:valid { border: 1px solid #d9dee3; }
+    textarea:focus:required:invalid {border: 1px solid red;}
+    textarea:required:valid { border: 1px solid #d9dee3; }
+</style>
+<link rel="stylesheet" href="/views/assets/css/selectize.css"/>
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Carburant/</span> Ajouter</h4>
+
+<!-- Basic Layout -->
+<div class="row">
+  <div class="col-xl">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Ajouter Carburant a Vehicule</h5>
+      </div>
+      <div class="card-body">
+        <span id="addcarburanterr"></span>
+        <form autocomplete="off" id="addcarburant">
+        <script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const departInput = document.getElementById("select_box4");
+    const arriveInput = document.getElementById("arrive");
+
+    arriveInput.addEventListener('input', function() {
+        const departValue = parseFloat(departInput.value);
+        const arriveValue = parseFloat(arriveInput.value);
+
+        if (arriveValue <= departValue) {
+            this.setCustomValidity("Le kilométrage à l'arrivée devrait être supérieur à celui du départ");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+});
+</script>
+        <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box2">type de Mission</label>
+                <select class="form-control"  id="select_box5" aria-label="Default select example" required>
+                <option value="<?php echo $ordre['data']['id'];?>" selected><?php echo $ordre['data']['type'];?></option>
+                </select>
+          </div>
+      </div>
+        <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box2">Excursion</label>
+                <select class="form-control"  id="select_box" aria-label="Default select example" required>
+                <option value="<?php echo $ordre['data']['excursionUuid'];?>" selected><?php echo $ordre['data']['nom'];?></option>
+                </select>
+          </div>
+      </div>
+
+      <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box">Vehicule</label>
+                <select class="form-control" id="select_box2" aria-label="Default select example" required>
+                    <option value="<?php echo $ordre['data']['vehicleUuid'];?>" selected><?php echo $ordre['data']['regisNumber'];?> </option>
+                </select>
+          </div>
+      </div>
+      <div class="mb-3">
+            <label class="form-label" for="select_box">chauffeur</label>
+                <select class="form-control" id="select_box3" aria-label="Default select example" required>
+                    <option selected value="<?php echo $ordre['data']['driverUuid'];?>" id=""><?php echo $ordre['data']['driverFullName'];?></option>
+                </select>
+               </div>
+               <div class="row">
+            <div class="col mb-3"> 
+              <label for="color" class="form-label">date excursion</label>
+              <input type="date" name="date" id="excursion"value="<?php echo $ordre['data']['excursion'];?>" name="excursion"class="form-control" placeholder=""  value="<?php echo date('Y-m-d'); ?>">
+            </div>
+          </div> 
+          <div class="row">
+      <div class="mb-3">
+            <label class="form-label" for="select_box">kilometerage de depart</label>
+                <select class="form-control" id="select_box4" aria-label="Default select example" >
+                    <option selected value="<?php echo $ordre['data']['kmdepart'];?>" id=""><?php echo $ordre['data']['kmdepart'];?> </option>
+                </select>
+          </div>
+      </div>
+      
+     
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">kilometerage de arrive</label>
+            <input name="arrive" id="arrive" value="" type="number" class="form-control" onchange="validatekm()" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+      
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">type de carburant</label>
+               <select name="type" id="" class="form-control">
+                     <option value="essance">essance</option>
+                     <option value="gasoil">gasoil</option>
+                </select>
+                </div>
+      
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Quantité en L</label>
+            <input name="quantite" id="quantite" value="" step="0.01" type="number" class="form-control" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+          
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Prix en dinar </label>
+            <input name="prix" id="prix" value="" type="number" step="0.01" class="form-control" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+      
+          </div>
+          <div class="row">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-fullname">Obeservation</label>
+            <input name="obeservation" id="obeservation" value="" type="text" class="form-control" oninput="this.setCustomValidity('')" id="basic-default-fullname" placeholder="" required/>
+          </div>
+          </div>
+          <div class="row">
+  <div class="mb-3">
+    <label class="form-label" for="etat">Etat de vehicule</label>
+    <select class="form-control" id="etat"  aria-label="Default select example" required>
+      <option value="">select</option>
+      <option value="bien">bien</option>
+      <option value="maintenance">entretien obligatoire</option>
+    </select>
+  </div>
+</div>
+
+<div id="observationDiv" class="row" style="display: none;">
+  <div class="mb-3">
+    <label class="form-label" for="basic-default-fullname">Observation de l'état</label>
+    <input name="obeseravtion" id="obeseravtion" value="" type="text" class="form-control" id="basic-default-fullname" placeholder="" required/>
+  </div>
+</div>
+
+<script>
+  const etat = document.getElementById('etat');
+  const observationDiv = document.getElementById('observationDiv');
+
+  etat.addEventListener('change', function() {
+    if (etat.value === 'maintenance') {
+      observationDiv.style.display = 'block';
+    } else {
+      observationDiv.style.display = 'none';
+    }
+  });
+</script>
+          <div name="ordreid" id="ordreid" value="<?php echo $ordre['data']['id'];?>"></div>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  
+
+
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+    <script src="/views/api/carburants.API.js"></script>
+  <script src="/views/dselect.js"></script>
+
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/form-layouts-vertical.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:29 GMT -->
+</html>

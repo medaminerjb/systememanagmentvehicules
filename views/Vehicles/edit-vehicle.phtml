@@ -1,0 +1,152 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Vehicules /</span> Vehicle Details
+</h4>
+<form autocomplete="off" id="editVehicle">
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const modelsSelect = document.getElementById('model');
+      
+     // select chauffeur
+     const modelsRequest = await fetch('/api/modelsvehicle?method=GET&&methode=allmodels');
+                const modelsResponse = await modelsRequest.json();
+                // select chauffeur
+                modelsResponse.data.forEach(models => {
+                    modelsSelect.insertAdjacentHTML('beforeend', `<option value="${models.modelUuid}">${models.model} ${models.place}  places</option>`); });
+           
+      // Initialize selectize
+  
+
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching or processing data:', error);
+    }
+    
+});
+
+</script>
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> Vehicule Mis à jour avec succès!</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+      
+      <div class="row">
+              <div class="col mb-3" id="selectParent">
+                <label for="model" class="form-label">model de vehicle</label>
+                <select id="model" name="model" class="form-select" required>
+                  <option value="<?php echo $vehicle['data']['modelUuid'];?>"><?php echo $vehicle['data']['model'];?></option>
+                 
+                 </select>
+                 </div>
+                 </div>
+      <div class="row">
+        <div class="col mb-3">
+          <label for="color" class="form-label">VEHICULE COULEUR</label>
+          <input type="text" name="color" id="color" value="<?php echo $vehicle['data']['color'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+
+      
+      <div class="row">
+        <div class="col mb-3">
+          <label for="regisNumber" class="form-label">nUMERO DE matricel</label>
+          <input type="text" name="regisNo" id="regisNumber" value="<?php echo $vehicle['data']['regisNumber'];?>" class="form-control" placeholder="">
+        </div>
+      </div>
+      
+                
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier Vehicule</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api//vehicle.API.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

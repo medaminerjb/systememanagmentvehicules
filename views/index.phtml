@@ -1,0 +1,245 @@
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+
+<div class="row">
+  <div class="col-lg-12 mb-4 order-0">
+    <div class="card">
+      <div class="d-flex align-items-end row">
+        <div class="col-sm-7">
+          <div class="card-body">
+            <h4 class="card-title text-primary">bienvenue <?php echo isset($loggedInUser['fullName']) ? $loggedInUser['fullName'] : '' ?></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <?php if($_SESSION['userRole'] === 'admin' || $_SESSION['userRole'] === 'superAdmin'): ?>
+  
+    <div class="row">
+    <div class="col-lg-4 mb-4">
+    <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Les problem techniques </h5>
+                </div>
+                <h7  id="totalpro"><i class='bx bx-loader-alt bx-spin'></i></h7>
+  </div>
+  </div>
+  </div>
+    <div class="col-lg-2 mb-4">
+    <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <div class="avatar flex-shrink-0">
+                <img src="/views/assets/img/icons/unicons/vehicle.png" alt="Credit Card" class="rounded">
+              </div>
+            </div>
+            <h7  id="totalV"><i class='bx bx-loader-alt bx-spin'></i></h7>
+          </div>
+        </div>
+      </div>
+    <div class="col-lg-2 mb-4">
+    <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <div class="avatar flex-shrink-0">
+                <img src="/views/assets/img/icons/unicons/workers.png" alt="Credit Card" class="rounded">
+              </div>
+            </div>
+            <h7  id="totalW"><i class='bx bx-loader-alt bx-spin'></i></h7>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+    <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Top excursion</h5>
+                </div>
+            <h7  id="Topexcursion"><i class='bx bx-loader-alt bx-spin'></i></h7>
+  </div>
+  </div>
+  </div>
+
+
+  <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Carburants & Kilometerges</h5>
+                </div>
+                <div class="container">
+                <div class="row mt-3">
+                <div class="col">
+                <button id="filterByLastMonthButton" class="btn btn-primary">Filter by Last Month</button>
+                    </div>
+                    <div class="col">
+                    <input type="month" id="monthSelector" class="form-control">
+                    </div>
+                     <div class="col">
+      <button id="filterBySelectedMonthButton" class="btn btn-primary">Filter by Selected Month</button>
+    </div>        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+    <canvas id="vehicles"></canvas>
+    </div>
+  </div>
+</div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">MAPS</h5>
+                </div><div id="map" style="height: 340px;"></div>
+                <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        map.locate({setView: true, maxZoom: 16});
+
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        map.on('locationfound', onLocationFound);
+
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        map.on('locationerror', onLocationError);
+    </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Toutes les Ordres</h5>
+                </div>
+                <canvas id="ordres"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Dépenses mensuelles</h5>
+                </div>
+                <canvas id="excursion"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex align-items-start justify-content-between">
+                    <h5 class="card-header">Revenue mensuelles</h5>
+                </div>
+                <canvas id="tarifs"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <!--/ Basic Bootstrap Table -->
+  
+          <hr class="my-5">
+                    
+      </div>
+      <!-- </div>
+    <div class="row"> -->
+    </div>
+  </div>
+  <?php endif ?>
+</div>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <?php if($_SESSION['userRole'] !== 'attendant'): ?>
+  <script src="/views/api/dashboard.API.js?v=1"></script>
+  <script src="/views/assets/js/datepicker.js"></script>
+
+  <?php endif ?>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  <script src="/views/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/dashboards-analytics.js"></script>
+  
+</body>
+
+
+</html>

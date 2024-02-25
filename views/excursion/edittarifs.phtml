@@ -1,0 +1,128 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+<!-- / Navbar -->
+
+      
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">hotels /</span> hotel Details
+</h4>
+<form autocomplete="off" id="edittarifs">
+<div class="row">
+  <div class="col-md-12">
+    <div class="card p-5">
+      <?php if(isset($_GET['s']) && $_GET['s'] === 'u'): ?>
+        <span class="p-1" id="errDiv"><span style="color:green"> hotel Mis à jour avec succès !</span></span>
+      <?php else: ?>
+        <span class="p-1" id="errDiv"></span>
+      <?php endif ?>
+      <div class="row">
+            <div class="col mb-3">
+              <label for="model" class="form-label">tarifs adulte</label>
+              <input name="tarifsadu" type="text" id="tarifsadu" class="form-control" value="<?php echo $tarifs['data']['tarifsadu'];?>" placeholder="" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-3">
+              <label for="model" class="form-label">tarifs enfant</label>
+              <input name="tarifsenf" type="text" id="tarifsenf" class="form-control" value="<?php echo $tarifs['data']['tarifsenf'];?>"placeholder="" required>
+            </div>
+          </div>
+     
+          <div class="row">
+              <div class="col mb-3" id="selectParent">
+                <label for="defaultSelectRole" class="form-label">Type de vehicle</label>
+                <select id="typev" name="typev" class="form-select" required>
+                <option value="<?php echo $tarifs['data']['vtypeUuid'];?>"><?php echo $tarifs['data']['vtype'] .$tarifs['data']['place'];?> place</option>       
+               
+                 </select>
+                 </div>
+                 </div>
+          
+                 <div class="mb-3">
+            <label class="form-label" for="excursion">type</label>
+                <select class="form-control" id="excursion" aria-label="Default select example" required>
+                    <option selected value="  <option value="<?php echo $tarifs['data']['excursionUuid'];?>"><?php echo $tarifs['data']['nom'];?> </option>
+                </select>
+          </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Modifier hotel</button>
+      </div>
+    </div>
+
+      
+    </div>
+  </div>
+</div>
+</form>
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
+
+<!-- Footer -->
+<?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+          <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+      </div>
+      <!-- / Layout page -->
+    </div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+
+  
+
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/api/tarifs.API.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/pages-account-settings-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:07 GMT -->
+</html>

@@ -1,0 +1,143 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'&&$_SESSION['userRole'] !== 'chauffeur'&& $_SESSION['userRole'] !== 'Agent'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+
+
+       
+          <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="col-md-12">
+   
+    <div class="card mb-4">
+    
+
+          <!-- Basic Bootstrap Table -->
+          <div class="card-body">
+        
+          <h4 class="fw-bold py-3 mb-4" id="ssllaal">
+            <span class="text-muted fw-light">Carburants/</span> historiques
+          </h4>
+            <div class="flexDiv">
+              
+              <h5 class="card-header">Tous les Bons</h5>
+              <form id="searchDriverForm" autocomplete="off">
+                <div class="d-flex g-3">
+                    <input name="searchDriver" class="form-control form-control-sm me-2" type="search" placeholder="Recherche une voiture">
+                    <button type="submit" disabled="true" id="searchDriverBtn" class="btn btn-primary btn-sm">Rechercher</button>
+                </div>
+              </form>
+             
+            </div>
+            <span class="ms-3" id="deleteErr"></span>
+            <div class="table-responsive text-nowrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                  <th>vehicule</th>
+
+                    <th>excursion</th>
+                    <th>date</th>
+                    <th>Total En dinar</th>
+                    <th>obeservation </th>
+                    <th>action</th>
+                    
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0"></tbody>
+              </table>
+              
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <div class="demo-inline-spacing">
+                    <!-- Basic Pagination -->
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                       
+                      </ul>
+                    </nav>
+                    <!--/ Basic Pagination -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/ Basic Bootstrap Table -->
+          <div class="modal fade" id="modalScrollable2" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalScrollableTitle">Ordre de mission Details</h5>
+                </div>
+                <div class="modal-body" id="detailsBody">
+                  <div class="text-center fs-3">
+                    <i class='bx bx-loader-alt bx-spin fs-1'></i>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                <!--a href="" class="btn btn-outline-secondary" id="printButton">Imprimer</a!-->
+                  <button type="button" class="btn btn-outline-secondary" id="closeDetails" data-bs-dismiss="modal">Fermer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-5">
+                    
+      </div>
+      
+      
+<!-- / Content -->
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+      <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+  </div>
+  <!-- / Layout page -->
+</div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+  
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/api/carburants.API.js"></script>
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/tables-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:32 GMT -->
+</html>

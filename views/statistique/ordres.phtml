@@ -1,0 +1,116 @@
+<?php  
+if(isset($_SESSION['userRole']) && $_SESSION['userRole'] !== 'superAdmin' && $_SESSION['userRole'] !== 'admin'&&$_SESSION['userRole'] !== 'chauffeur'&& $_SESSION['userRole'] !== 'Agent'):
+  include  $_SERVER['DOCUMENT_ROOT'].'/views/404.php';
+  return;
+endif;
+ include  $_SERVER['DOCUMENT_ROOT'].'/views/components/header.phtml'; ?>
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+
+            <div class="row">
+
+
+        <div class="col-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <h5 class="card-header">Toutes les Ordres</h5>
+              <!-- Button trigger modal -->
+             
+            </div>
+         
+        
+          
+           <canvas id="ordres" ></canvas> 
+        
+           
+            </div></div></div>
+
+    <div class="col-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <h5 class="card-header">toutes les excursion</h5>
+              <!-- Button trigger modal -->
+             
+            </div>
+         
+           
+           <canvas id="excursion" ></canvas> 
+        
+           
+            </div></div></div>
+            <div class="col-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title d-flex align-items-start justify-content-between">
+              <h5 class="card-header">toutes les missions</h5>
+              <!-- Button trigger modal -->
+             
+            </div>
+         
+           
+           <canvas id="mission" ></canvas> 
+        
+           
+            </div></div></div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <!--/ Basic Bootstrap Table -->
+       
+          <hr class="my-5">
+                    
+      </div>
+      
+      
+<!-- / Content -->
+<!-- Footer -->
+  <?php include  $_SERVER['DOCUMENT_ROOT'].'/views/components/footer.phtml'; ?>
+<!-- / Footer -->
+
+          
+      <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+  </div>
+  <!-- / Layout page -->
+</div>
+
+    
+    
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+    
+    
+  </div>
+  <!-- / Layout wrapper -->
+  
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="/views/api/statistique.API.js"></script>
+  <script src="/views/assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="/views/assets/vendor/libs/popper/popper.js"></script>
+  <script src="/views/assets/vendor/js/bootstrap.js"></script>
+  <script src="/views/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  
+  <script src="/views/assets/vendor/js/menu.js"></script>
+  <script src="/views/assets/js/pages-account-settings-account.js"></script>
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  
+  
+
+  <!-- Main JS -->
+  <script src="/views/assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  
+</body>
+
+
+<!-- Mirrored from demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/tables-basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Dec 2022 09:09:32 GMT -->
+</html>
